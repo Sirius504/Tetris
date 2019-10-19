@@ -4,7 +4,6 @@ namespace Tetris.Model
 {
     public class Cell
     {
-        [SerializeField]
         private Color color;
 
         public Cell(Color color)
