@@ -7,14 +7,11 @@ namespace Tetris.View
 {
     public class GridRenderer : MonoBehaviour
     {
-        [SerializeField]
         private TetrisGrid grid;
 
         [SerializeField]
         private Transform cellPrefab = default;
-
-        private Vector2 size;
-
+        
 
         [Inject]
         public void Construct(TetrisGrid grid)
@@ -25,36 +22,39 @@ namespace Tetris.View
         // Use this for initialization
         private void Start()
         {
-            size = transform.lossyScale;
             StartCoroutine(DrawGrid());
-        }
-
-        private void OnDrawGizmos()
-        {
-            //Gizmos.DrawCube();
         }
 
         private IEnumerator DrawGrid()
         {
-            float cellSize = Mathf.Min(size.x / grid.Size.x, size.y / grid.Size.y);
-            cellPrefab.transform.localScale = new Vector3(cellSize / size.x, cellSize / size.y, 1f);
-            float offset = cellSize / 2;               
+            Vector2 cellSizeNormilized = CalculateCellSizeNormilized();
+            Vector3 newCellScale = new Vector3(cellSizeNormilized.x, cellSizeNormilized.y, 1f);
 
-            for (int i = 0; i < grid.Size.x; i++)
-                for (int j = 0; j < grid.Size.y; j++)
+            Vector2 firstCellPosition = GetFirstCellPosition(cellSizeNormilized);
+
+            for (int j = 0; j < grid.Size.y; j++)
+                for (int i = 0; i < grid.Size.x; i++)
                 {
-                    float positionX = ((-1 * (size.x / 2)) + offset + i * cellSize) / size.x;
-                    float positionY = (size.y / 2 + offset + j * cellSize) / size.y;
+                    Vector3 newPosition = firstCellPosition + new Vector2(i * cellSizeNormilized.x, -j * cellSizeNormilized.y);
                     var cell = Instantiate(cellPrefab, transform);
-                    cell.localPosition = new Vector3(positionX, -positionY, 0f);
-                    yield return new WaitForSeconds(.2f);
+                    cell.localPosition = newPosition;
+                    cell.localScale = newCellScale;
+                    cell.gameObject.SetActive(true);
+                    yield return new WaitForSeconds(.01f);
                 }
         }
 
-        // Update is called once per frame
-        private void Update()
+        private Vector2 CalculateCellSizeNormilized()
         {
+            return new Vector3(1f / grid.Size.x, 1f / grid.Size.y);
+        }
 
+        private static Vector2 GetFirstCellPosition(Vector2 cellSizeNormilized)
+        {
+            var topLeftCorner = new Vector2(-0.5f, 0.5f);
+            var offset = new Vector2(cellSizeNormilized.x / 2, -cellSizeNormilized.y / 2);
+            var firstCellPosition = topLeftCorner + offset;
+            return firstCellPosition;
         }
     }
 }
