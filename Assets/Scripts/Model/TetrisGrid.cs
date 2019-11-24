@@ -1,19 +1,16 @@
 ﻿using Tetris.Exceptions;
 using UnityEngine;
-using Zenject;
 
 namespace Tetris.Model
 {
     public class TetrisGrid
     {
-        public Vector2Int Size { get; }
+        public Vector2Int Size { get; } = new Vector2Int(10, 20); 
         public Cell[,] Cells { get; }
 
-        [Inject]
-        public TetrisGrid(Vector2Int size)
+        public TetrisGrid()
         {
-            this.Size = size;
-            Cells = GenerateEmptyGrid(size);
+            Cells = GenerateEmptyGrid(Size);
         }
 
         private Cell[,] GenerateEmptyGrid(Vector2Int size)

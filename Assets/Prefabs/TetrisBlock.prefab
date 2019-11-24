@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3119058177029564752}
   - component: {fileID: 5742226312419391768}
   - component: {fileID: 7441536060746661524}
+  - component: {fileID: 7510736969750533071}
   m_Layer: 0
   m_Name: TetrisBlock
   m_TagString: Untagged
@@ -116,3 +117,15 @@ MonoBehaviour:
   _useSceneContext: 0
   _context: {fileID: 5742226312419391768}
   _bindType: 0
+--- !u!114 &7510736969750533071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3119058177029564766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05f99eb420c4412458ba08bee69cbf9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
