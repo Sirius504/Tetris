@@ -3,14 +3,17 @@ using Tetris.View;
 using UnityEngine;
 using Zenject;
 
-public class GridInstaller : MonoInstaller
+namespace Tetris.Installers
 {
-    [SerializeField]
-    [HideInInspector]
-    public Vector2Int GridSize = new Vector2Int(1, 1);
-    public override void InstallBindings()
+    public class GridInstaller : MonoInstaller
     {
-        Container.Bind<TetrisGrid>().AsSingle().WithArguments(GridSize);
-        Container.Bind<GridRenderer>().AsSingle();
+        [SerializeField]
+        [HideInInspector]
+        public Vector2Int GridSize = new Vector2Int(1, 1);
+        public override void InstallBindings()
+        {
+            Container.Bind<TetrisGrid>().AsSingle().WithArguments(GridSize);
+            Container.Bind<GridRenderer>().AsSingle();
+        }
     }
 }
