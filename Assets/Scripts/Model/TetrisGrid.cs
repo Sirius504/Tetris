@@ -34,7 +34,6 @@ namespace Tetris.Model
                     }
                 }
 #endif
-
             return result;
         }
     }
