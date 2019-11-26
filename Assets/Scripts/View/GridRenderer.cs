@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Tetris.Model;
+﻿using Tetris.Model;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +8,7 @@ namespace Tetris.View
     {
         private TetrisGrid gridModel;
         private Cell.Pool cellPool;
-        //private Cell[,] cells;
+        private Cell[,] cells;
         private Grid gridComponent;
 
         [SerializeField]
@@ -22,23 +21,37 @@ namespace Tetris.View
             this.gridModel = gridModel;
             this.cellPool = cellPool;
             this.gridComponent = gridComponent;
-            //cells = new Cell[gridModel.Size.x, gridModel.Size.y];
+            cells = new Cell[gridModel.Size.x, gridModel.Size.y];
         }
 
-        private void Start()
+        private void Update()
         {
-            StartCoroutine(DrawGrid());
+            CleanGrid();
+            DrawGrid();
         }
 
-        private IEnumerator DrawGrid()
+        private void CleanGrid()
+        {
+            for (int j = 0; j < gridModel.Size.y; j++)
+                for (int i = 0; i < gridModel.Size.x; i++)
+                {
+                    var currentCell = cells[i, j];
+                    if (currentCell != null)
+                    {
+                        cellPool.Despawn(currentCell);
+                        currentCell = null;
+                    }
+                }
+        }
+
+        private void DrawGrid()
         {
             for (int j = 0; j < gridModel.Size.y; j++)
                 for (int i = 0; i < gridModel.Size.x; i++)
                 {
                     var cellData = gridModel.Cells[i, j];
-                    if (cellData != null)                    
-                        SpawnCell(i, j, cellData);                    
-                    yield return new WaitForSeconds(.01f);
+                    if (cellData != null)
+                        cells[i, j] = SpawnCell(i, j, cellData);
                 }
         }
 
