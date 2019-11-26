@@ -1,9 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Tetris.Model.Enumerators;
 using UnityEngine;
-using Zenject;
-
-
 
 
 [CreateAssetMenu(fileName = "ColorSettings", menuName = "Tetris/ColorSettings")]
@@ -17,7 +15,21 @@ public class ColorMaterials : ScriptableObject
     }
 
     [SerializeField]
-    private ColorMaterialPair[] colorMaterials;
+    private ColorMaterialPair[] colorMaterialsArray;
+    private Dictionary<CellColorsEnum, Material> colorMaterials;
+        
+    public Material GetMaterial(CellColorsEnum color)
+    {
+        if (colorMaterials == null)
+            InitializeMaterialsDictionary();
 
-    //public Material GetMaterial(CellColorsEnum)
+        return colorMaterials[color];
+    }
+
+    private void InitializeMaterialsDictionary()
+    {
+        colorMaterials = new Dictionary<CellColorsEnum, Material>();
+        foreach(var kvp in colorMaterialsArray)        
+            colorMaterials.Add(kvp.color, kvp.material);        
+    }
 }

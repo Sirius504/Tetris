@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+﻿using Tetris.Model.Enumerators;
 
 namespace Tetris.Model
 {
     public class Cell
     {
-        private Color color;
+        public CellColorsEnum Color { get; }
 
-        public Cell(Color color)
+        public Cell(CellColorsEnum color)
         {
-            this.color = color;
+            Color = color;
         }
     }
 }

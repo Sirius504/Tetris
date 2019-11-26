@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: ColorMaterials
   m_EditorClassIdentifier: Assembly-CSharp::ColorMaterials
-  colorMaterials:
+  colorMaterialsArray:
   - color: 0
     material: {fileID: 2100000, guid: 3327ffc50150ecc46ad303f309a94654, type: 2}
   - color: 1

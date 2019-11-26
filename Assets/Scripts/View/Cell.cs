@@ -7,13 +7,18 @@ namespace Tetris.View
     public class Cell : MonoBehaviour
     {
         private SpriteRenderer spriteRenderer;
-        private ColorMaterials colorMaterials;
+        private ColorMaterials colorMaterials;        
 
         [Inject]
         public void Construct(SpriteRenderer spriteRenderer, ColorMaterials colorMaterials)
         {
             this.spriteRenderer = spriteRenderer;
             this.colorMaterials = colorMaterials;
+        }
+
+        public void SetColor(CellColorsEnum color)
+        {
+            spriteRenderer.material = colorMaterials.GetMaterial(color);
         }
 
         public void SetLocalPosition(Vector3 position)
@@ -24,11 +29,6 @@ namespace Tetris.View
         public void SetLocalScale(Vector3 newScale)
         {
             transform.localScale = newScale;
-        }
-
-        public void SetColor(CellColorsEnum newColor)
-        {
-            //spriteRenderer.material = 
         }
 
 
