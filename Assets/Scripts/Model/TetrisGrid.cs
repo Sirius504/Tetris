@@ -5,12 +5,13 @@ namespace Tetris.Model
 {
     public class TetrisGrid
     {
-        public Vector2Int Size { get; } = new Vector2Int(10, 20); 
+        public Vector2Int Size { get; private set; }
         public Cell[,] Cells { get; }
 
-        public TetrisGrid()
+        public TetrisGrid(Vector2Int size)
         {
-            Cells = GenerateEmptyGrid(Size);
+            Size = size;
+            Cells = GenerateEmptyGrid(size);
         }
 
         private Cell[,] GenerateEmptyGrid(Vector2Int size)
