@@ -1,2 +1,2 @@
 # Tetris
-My own project, which purpose is to help me learn some good coding practices (DI and unit-tests in particular).
+My pet-project, I've started to get a good grasp on Zenject Dependency Injection Framework. 
