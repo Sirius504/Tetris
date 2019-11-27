@@ -1,2 +1,2 @@
 # Tetris
-My own project, which purpose is to learn good code architecture (DI and unit-tests in particular) through practice.
+My own project, which purpose is to help me learn some good coding practices (DI and unit-tests in particular).
