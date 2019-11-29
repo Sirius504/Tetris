@@ -1,14 +1,17 @@
-﻿using UnityEngine;
+﻿using Tetris.Model.Settings;
+using UnityEngine;
 using Zenject;
-
-[CreateAssetMenu(fileName = "ColorsInstaller", menuName = "Installers/ColorsInstaller")]
-public class ColorMaterialsInstaller : ScriptableObjectInstaller<ColorMaterialsInstaller>
+namespace Tetris.Installers
 {
-    [SerializeField]
-    private ColorMaterials colorSettings;
-
-    public override void InstallBindings()
+    [CreateAssetMenu(fileName = "ColorsInstaller", menuName = "Installers/ColorsInstaller")]
+    public class ColorMaterialsInstaller : ScriptableObjectInstaller<ColorMaterialsInstaller>
     {
-        Container.BindInstance(colorSettings).AsSingle();
-    }
+        [SerializeField]
+        private ColorMaterials colorSettings;
+
+        public override void InstallBindings()
+        {
+            Container.BindInstance(colorSettings).AsSingle();
+        }
+    } 
 }

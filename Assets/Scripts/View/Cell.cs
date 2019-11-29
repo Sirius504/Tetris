@@ -1,4 +1,5 @@
 ﻿using Tetris.Model.Enumerators;
+using Tetris.Model.Settings;
 using UnityEngine;
 using Zenject;
 

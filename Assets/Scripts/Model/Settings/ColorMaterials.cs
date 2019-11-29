@@ -3,33 +3,35 @@ using System.Collections.Generic;
 using Tetris.Model.Enumerators;
 using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "ColorSettings", menuName = "Tetris/ColorSettings")]
-public class ColorMaterials : ScriptableObject
+namespace Tetris.Model.Settings
 {
-    [Serializable]
-    public class ColorMaterialPair
+    [CreateAssetMenu(fileName = "ColorSettings", menuName = "Tetris/ColorSettings")]
+    public class ColorMaterials : ScriptableObject
     {
-        public CellColorsEnum color;
-        public Material material;
-    }
+        [Serializable]
+        public class ColorMaterialPair
+        {
+            public CellColorsEnum color;
+            public Material material;
+        }
 
-    [SerializeField]
-    private ColorMaterialPair[] colorMaterialsArray;
-    private Dictionary<CellColorsEnum, Material> colorMaterials;
-        
-    public Material GetMaterial(CellColorsEnum color)
-    {
-        if (colorMaterials == null)
-            InitializeMaterialsDictionary();
+        [SerializeField]
+        private ColorMaterialPair[] colorMaterialsArray;
+        private Dictionary<CellColorsEnum, Material> colorMaterials;
 
-        return colorMaterials[color];
-    }
+        public Material GetMaterial(CellColorsEnum color)
+        {
+            if (colorMaterials == null)
+                InitializeMaterialsDictionary();
 
-    private void InitializeMaterialsDictionary()
-    {
-        colorMaterials = new Dictionary<CellColorsEnum, Material>();
-        foreach(var kvp in colorMaterialsArray)        
-            colorMaterials.Add(kvp.color, kvp.material);        
+            return colorMaterials[color];
+        }
+
+        private void InitializeMaterialsDictionary()
+        {
+            colorMaterials = new Dictionary<CellColorsEnum, Material>();
+            foreach (var kvp in colorMaterialsArray)
+                colorMaterials.Add(kvp.color, kvp.material);
+        }
     }
 }
