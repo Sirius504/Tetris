@@ -29,7 +29,7 @@ namespace Tetris.View
             cells = new Cell[gridModel.Size.x, gridModel.Size.y];
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             CleanGrid();
             DrawGrid();
@@ -40,11 +40,10 @@ namespace Tetris.View
             for (int j = 0; j < gridModel.Size.y; j++)
                 for (int i = 0; i < gridModel.Size.x; i++)
                 {
-                    var currentCell = cells[i, j];
-                    if (currentCell != null)
+                    if (cells[i, j] != null)
                     {
-                        cellPool.Despawn(currentCell);
-                        currentCell = null;
+                        cellPool.Despawn(cells[i, j]);
+                        cells[i, j] = null;
                     }
                 }
         }
@@ -63,7 +62,6 @@ namespace Tetris.View
         private Cell SpawnCell(int x, int y, Model.Cell cellData)
         {
             var cell = cellPool.Spawn();
-            cell.transform.SetParent(transform);
             cell.SetColor(cellData.Color);
             var newPosition = gridComponent.CellToLocal(new Vector3Int(x, y, 0)) + gridCornerOffset;
             cell.SetLocalPosition(newPosition);
@@ -71,10 +69,5 @@ namespace Tetris.View
             cell.gameObject.SetActive(true);
             return cell;
         }
-
-        //private void DespawnCell(int x, int y)
-        //{
-        //    cellPool.Despawn(cell);
-        //}
     }
 }

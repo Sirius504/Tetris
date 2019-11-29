@@ -31,7 +31,10 @@ namespace Tetris.View
         {
             var colorValues = (CellColorsEnum[])Enum.GetValues(typeof(CellColorsEnum));
             CellColorsEnum color = colorValues[UnityEngine.Random.Range(0, colorValues.Length)];
-            tetrisGrid.CreateCell(signal.Position, color);
+            if (tetrisGrid.Cells[signal.Position.x, signal.Position.y] != null)
+                tetrisGrid.DeleteCell(signal.Position);
+            else
+                tetrisGrid.CreateCell(signal.Position, color);
         }
     }
 }

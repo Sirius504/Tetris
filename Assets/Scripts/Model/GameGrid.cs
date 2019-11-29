@@ -35,5 +35,12 @@ namespace Tetris.Model
             Cell[,] result = new Cell[size.x, size.y];
             return result;
         }
+
+        internal void DeleteCell(Vector2Int position)
+        {
+            if (Cells[position.x, position.y] == null)
+                return;
+            Cells[position.x, position.y] = null;
+        }
     }
 }

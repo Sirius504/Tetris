@@ -11,12 +11,17 @@ namespace Tetris.Installers
         private Vector2Int gridSize;
         [SerializeField]
         private GameObject cellPrefab;
+        [SerializeField]
+        private Transform cellsParent;
 
         public override void InstallBindings()
         {
             Container.Bind<GameGrid>().AsSingle().WithArguments(gridSize);
             Container.Bind<GridRenderer>().AsSingle();
-            Container.BindMemoryPool<View.Cell, View.Cell.Pool>().FromComponentInNewPrefab(cellPrefab);
+            Container.BindMemoryPool<View.Cell, View.Cell.Pool>()
+                .WithInitialSize(gridSize.x * gridSize.y / 2)
+                .FromComponentInNewPrefab(cellPrefab)
+                .UnderTransform(cellsParent);
         }
     }
 }

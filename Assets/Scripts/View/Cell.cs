@@ -33,7 +33,7 @@ namespace Tetris.View
         }
 
 
-        public class Pool : MemoryPool<Cell>
+        public class Pool : MonoMemoryPool<Cell>
         {
 
         }
