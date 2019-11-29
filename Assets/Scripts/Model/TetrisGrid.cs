@@ -1,4 +1,4 @@
-﻿#define GRID_DEBUG
+﻿//#define GRID_DEBUG
 using System;
 using Tetris.Exceptions;
 using Tetris.Model.Enumerators;
@@ -17,13 +17,25 @@ namespace Tetris.Model
             Cells = GenerateEmptyGrid(size);
         }
 
+        public void CreateCell(Vector2Int position, CellColorsEnum color)
+        {
+            if ((position.x < 0 || position.x >= Cells.Length)
+                && (position.y < 0 || position.y >= Cells.Length))
+                throw new ArgumentOutOfRangeException();
+
+            if (Cells[position.x, position.y] != null)
+                throw new ArgumentException();
+
+            Cells[position.x, position.y] = new Cell(color);
+        }
+
         private Cell[,] GenerateEmptyGrid(Vector2Int size)
         {
             if (size.x <= 0 || size.y <= 0)
                 throw new GridGenerationException("At least one of Size vector components is less or equal zero.");
             var colorValues = (CellColorsEnum[])Enum.GetValues(typeof(CellColorsEnum));
             Cell[,] result = new Cell[size.x, size.y];
-#if DEBUG
+#if GRID_DEBUG
             for (int j = 0; j < size.y; j++)
                 for (int i = 0; i < size.x; i++)
                 {

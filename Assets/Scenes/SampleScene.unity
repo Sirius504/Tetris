@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -211,7 +211,6 @@ GameObject:
   - component: {fileID: 263682280}
   - component: {fileID: 263682283}
   - component: {fileID: 263682285}
-  - component: {fileID: 263682284}
   - component: {fileID: 263682287}
   - component: {fileID: 263682286}
   m_Layer: 0
@@ -265,23 +264,6 @@ MonoBehaviour:
   gridSize: {x: 10, y: 20}
   cellPrefab: {fileID: 3119058177029564766, guid: 06eb4317a1c95264880653644b3ee820,
     type: 3}
---- !u!114 &263682284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263682279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
-  _monoInstallers: []
-  _installerPrefabs: []
-  _autoRun: 1
-  _kernel: {fileID: 0}
 --- !u!114 &263682285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,8 +279,8 @@ MonoBehaviour:
   _components:
   - {fileID: 263682287}
   _identifier: 
-  _useSceneContext: 0
-  _context: {fileID: 263682284}
+  _useSceneContext: 1
+  _context: {fileID: 0}
   _bindType: 0
 --- !u!114 &263682286
 MonoBehaviour:
@@ -540,6 +522,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 00f82d496d8b3984dbbe8077ecc331bb, type: 2}
   _monoInstallers:
   - {fileID: 263682283}
+  - {fileID: 1867738433}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -664,6 +647,8 @@ GameObject:
   - component: {fileID: 1867738432}
   - component: {fileID: 1867738431}
   - component: {fileID: 1867738430}
+  - component: {fileID: 1867738433}
+  - component: {fileID: 1867738434}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -719,3 +704,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1867738433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867738429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3eb012e7b835c4fb18add506eebe9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1867738434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867738429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b4b58f6dc9c0f4b8496f1618ca0b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
