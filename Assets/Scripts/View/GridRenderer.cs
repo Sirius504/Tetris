@@ -10,6 +10,10 @@ namespace Tetris.View
         private Cell.Pool cellPool;
         private Cell[,] cells;
         private Grid gridComponent;
+        // As Cells in Unity Grid component have (0, 0) as their down left corner, we
+        // need this offset, so objects spawn at centers of grid cells instead of
+        // corners.
+        private Vector3 gridCornerOffset;
 
         [SerializeField]
         private Transform cellPrefab = default;
@@ -21,6 +25,7 @@ namespace Tetris.View
             this.gridModel = gridModel;
             this.cellPool = cellPool;
             this.gridComponent = gridComponent;
+            gridCornerOffset = gridComponent.cellSize / 2f;
             cells = new Cell[gridModel.Size.x, gridModel.Size.y];
         }
 
@@ -60,7 +65,8 @@ namespace Tetris.View
             var cell = cellPool.Spawn();
             cell.transform.SetParent(transform);
             cell.SetColor(cellData.Color);
-            cell.SetLocalPosition(gridComponent.CellToLocal(new Vector3Int(x, y, 0)));
+            var newPosition = gridComponent.CellToLocal(new Vector3Int(x, y, 0)) + gridCornerOffset;
+            cell.SetLocalPosition(newPosition);
             cell.SetLocalScale(gridComponent.cellSize);
             cell.gameObject.SetActive(true);
             return cell;
