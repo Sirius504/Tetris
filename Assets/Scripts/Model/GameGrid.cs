@@ -1,5 +1,4 @@
-﻿//#define GRID_DEBUG
-using System;
+﻿using System;
 using Tetris.Model.Enumerators;
 using UnityEngine;
 
@@ -34,17 +33,6 @@ namespace Tetris.Model
                 throw new ArgumentOutOfRangeException("At least one of Size vector components is less or equal zero.");
             var colorValues = (CellColorsEnum[])Enum.GetValues(typeof(CellColorsEnum));
             Cell[,] result = new Cell[size.x, size.y];
-#if GRID_DEBUG
-            for (int j = 0; j < size.y; j++)
-                for (int i = 0; i < size.x; i++)
-                {
-                    if ((i + j) % 2 == 1)
-                    {
-                        CellColorsEnum color = colorValues[UnityEngine.Random.Range(0, colorValues.Length)];
-                        result[i, j] = new Cell(color);
-                    }
-                }
-#endif
             return result;
         }
     }
