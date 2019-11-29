@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 17dfb881404f3ba4aa295048a6232174, type: 3}
   m_Name: ColorMaterials
   m_EditorClassIdentifier: Assembly-CSharp::ColorMaterials
   colorMaterialsArray:
@@ -20,8 +20,10 @@ MonoBehaviour:
   - color: 2
     material: {fileID: 2100000, guid: fc4446459c37ede4991bb3ff8a50eb61, type: 2}
   - color: 3
-    material: {fileID: 2100000, guid: b4d571f2e0afa254bb2e3123bf30c49d, type: 2}
+    material: {fileID: 2100000, guid: 26c83f9f633864043a955f98eaa68893, type: 2}
   - color: 4
-    material: {fileID: 2100000, guid: d21b2529c61d5ea4bbe7610b6f6de8f3, type: 2}
+    material: {fileID: 2100000, guid: b4d571f2e0afa254bb2e3123bf30c49d, type: 2}
   - color: 5
+    material: {fileID: 2100000, guid: d21b2529c61d5ea4bbe7610b6f6de8f3, type: 2}
+  - color: 6
     material: {fileID: 2100000, guid: a194873ea52f7e144bb77a583f421440, type: 2}

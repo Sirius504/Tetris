@@ -19,6 +19,12 @@ namespace Tetris.Model.Settings
         private ColorMaterialPair[] colorMaterialsArray;
         private Dictionary<CellColorsEnum, Material> colorMaterials;
 
+        public void OnEnable()
+        {
+            InitializeMaterialsDictionary();
+            Validate();
+        }
+
         public Material GetMaterial(CellColorsEnum color)
         {
             if (colorMaterials == null)
@@ -27,11 +33,35 @@ namespace Tetris.Model.Settings
             return colorMaterials[color];
         }
 
-        private void InitializeMaterialsDictionary()
+        public void InitializeMaterialsDictionary()
         {
             colorMaterials = new Dictionary<CellColorsEnum, Material>();
             foreach (var kvp in colorMaterialsArray)
-                colorMaterials.Add(kvp.color, kvp.material);
+                colorMaterials.Add(kvp.color, kvp.material);            
+        }
+
+        private void Validate()
+        {
+            List<string> colorsWithoutMaterials = new List<string>();
+            foreach (var color in (CellColorsEnum[])Enum.GetValues(typeof(CellColorsEnum)))
+            {
+                try
+                {
+                    var material = colorMaterials[color];
+                    if (material == null)
+                        throw new MissingMemberException();
+                }
+                catch (KeyNotFoundException)
+                {
+                    colorsWithoutMaterials.Add(color.ToString());
+                }
+                catch (MissingMemberException)
+                {
+                    colorsWithoutMaterials.Add(color.ToString());
+                }
+            }
+            if (colorsWithoutMaterials.Count > 0)
+                throw new MissingMemberException($"Missing materials for colors: {string.Join(", ", colorsWithoutMaterials)}");
         }
     }
 }

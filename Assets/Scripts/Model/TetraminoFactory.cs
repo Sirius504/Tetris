@@ -11,6 +11,7 @@ namespace Tetris.Model
         {
             public int[,] matrix;
             public Vector2 pivot;
+            public CellColorsEnum color;
         }
 
         private readonly Dictionary<TetraminoType, TetraminoInfo> tetraminoInfos =
@@ -26,7 +27,8 @@ namespace Tetris.Model
                             {0, 0, 0, 0},
                             {0, 0, 0, 0},
                         },
-                        pivot = new Vector2(1.5f, 1.5f)
+                        pivot = new Vector2(1.5f, 1.5f),
+                        color = CellColorsEnum.Cyan
                     }
                 },
 
@@ -39,7 +41,8 @@ namespace Tetris.Model
                             {1, 1, 1},
                             {0, 0, 0}
                         },
-                        pivot = new Vector2(1f, 1f)
+                        pivot = new Vector2(1f, 1f),
+                        color = CellColorsEnum.Blue
                     }
                 },
 
@@ -52,7 +55,8 @@ namespace Tetris.Model
                             {1, 1, 1,},
                             {0, 0, 0,},
                         },
-                        pivot = new Vector2(1f, 1f)
+                        pivot = new Vector2(1f, 1f),
+                        color = CellColorsEnum.Orange
                     }
                 },
 
@@ -65,7 +69,8 @@ namespace Tetris.Model
                             {0, 1, 1, 0},
                             {0, 0, 0, 0},
                         },
-                        pivot = new Vector2(1.5f, 0.5f)
+                        pivot = new Vector2(1.5f, 0.5f),
+                        color = CellColorsEnum.Yellow
                     }
                 },
 
@@ -78,7 +83,8 @@ namespace Tetris.Model
                             {1, 1, 0},
                             {0, 0, 0},
                         },
-                        pivot = new Vector2(1f, 1f)
+                        pivot = new Vector2(1f, 1f),
+                        color = CellColorsEnum.Green
                     }
                 },
 
@@ -91,7 +97,8 @@ namespace Tetris.Model
                             {1, 1, 1},
                             {0, 0, 0},
                         },
-                        pivot = new Vector2(1f, 1f)
+                        pivot = new Vector2(1f, 1f),
+                        color = CellColorsEnum.Magenta
                     }
                 },
 
@@ -104,7 +111,8 @@ namespace Tetris.Model
                             {0, 1, 1},
                             {0, 0, 0},
                         },
-                        pivot = new Vector2(1f, 1f)
+                        pivot = new Vector2(1f, 1f),
+                        color = CellColorsEnum.Red
                     }
                 },
             };

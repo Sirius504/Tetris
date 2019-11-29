@@ -5,6 +5,7 @@
         Red,
         Blue,
         Yellow,
+        Orange,
         Green,
         Cyan,
         Magenta

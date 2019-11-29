@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TetrisBlock - Green
+  m_Name: TetrisBlock - Orange
   m_Shader: {fileID: -6465566751694194690, guid: f01ab7756fcc2be4a894dacce8f3dedb,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
@@ -71,13 +71,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_640427FC: 0
-    - Vector1_125A892A: 1
+    - Vector1_125A892A: 1.2
     - Vector1_1E365975: 0
-    - Vector1_71C57F4C: 32
+    - Vector1_71C57F4C: 320
     - Vector1_9CAE631D: 0
     - Vector1_D2FACDB2: 0
     - Vector1_D34CFA1F: 100
-    - Vector1_E9AFC835: 2.5
+    - Vector1_E9AFC835: 3.4
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
