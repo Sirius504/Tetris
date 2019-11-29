@@ -1,17 +1,16 @@
 ﻿//#define GRID_DEBUG
 using System;
-using Tetris.Exceptions;
 using Tetris.Model.Enumerators;
 using UnityEngine;
 
 namespace Tetris.Model
 {
-    public class TetrisGrid
+    public class GameGrid
     {
         public Vector2Int Size { get; private set; }
         public Cell[,] Cells { get; }
 
-        public TetrisGrid(Vector2Int size)
+        public GameGrid(Vector2Int size)
         {
             Size = size;
             Cells = GenerateEmptyGrid(size);
@@ -32,7 +31,7 @@ namespace Tetris.Model
         private Cell[,] GenerateEmptyGrid(Vector2Int size)
         {
             if (size.x <= 0 || size.y <= 0)
-                throw new GridGenerationException("At least one of Size vector components is less or equal zero.");
+                throw new ArgumentOutOfRangeException("At least one of Size vector components is less or equal zero.");
             var colorValues = (CellColorsEnum[])Enum.GetValues(typeof(CellColorsEnum));
             Cell[,] result = new Cell[size.x, size.y];
 #if GRID_DEBUG

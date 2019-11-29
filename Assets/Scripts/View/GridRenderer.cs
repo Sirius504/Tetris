@@ -6,7 +6,7 @@ namespace Tetris.View
 {
     public class GridRenderer : MonoBehaviour
     {
-        private TetrisGrid gridModel;
+        private GameGrid gridModel;
         private Cell.Pool cellPool;
         private Cell[,] cells;
         private Grid gridComponent;
@@ -20,7 +20,7 @@ namespace Tetris.View
         private Vector3 cellSpriteSize;
 
         [Inject]
-        public void Construct(TetrisGrid gridModel, Cell.Pool cellPool, Grid gridComponent)
+        public void Construct(GameGrid gridModel, Cell.Pool cellPool, Grid gridComponent)
         {
             this.gridModel = gridModel;
             this.cellPool = cellPool;

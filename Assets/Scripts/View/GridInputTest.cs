@@ -9,10 +9,10 @@ namespace Tetris.View
 {
     public class GridInputTest : IInitializable, IDisposable
     {
-        private TetrisGrid tetrisGrid;
+        private GameGrid tetrisGrid;
         private SignalBus signalBus;
 
-        public GridInputTest(TetrisGrid tetrisGrid, SignalBus signalBus)
+        public GridInputTest(GameGrid tetrisGrid, SignalBus signalBus)
         {
             this.signalBus = signalBus;
             this.tetrisGrid = tetrisGrid;

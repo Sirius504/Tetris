@@ -1,5 +1,4 @@
-﻿using Tetris.Installers;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tetris.View
 {
@@ -7,7 +6,7 @@ namespace Tetris.View
     public class GridDebug : MonoBehaviour
     {
         public Grid grid;
-
+               
         // Update is called once per frame
         void Update()
         {

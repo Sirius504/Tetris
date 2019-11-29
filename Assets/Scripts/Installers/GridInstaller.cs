@@ -14,7 +14,7 @@ namespace Tetris.Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<TetrisGrid>().AsSingle().WithArguments(gridSize);
+            Container.Bind<GameGrid>().AsSingle().WithArguments(gridSize);
             Container.Bind<GridRenderer>().AsSingle();
             Container.BindMemoryPool<View.Cell, View.Cell.Pool>().FromComponentInNewPrefab(cellPrefab);
         }
