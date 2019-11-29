@@ -2,7 +2,6 @@
 using Tetris.Model;
 using Tetris.Model.Enumerators;
 using Tetris.Signals;
-using UnityEngine;
 using Zenject;
 
 namespace Tetris.View
@@ -20,7 +19,6 @@ namespace Tetris.View
 
         public void Initialize()
         {
-            Debug.Log("shit");
             signalBus.Subscribe<GridInputMouseSignal>(OnMouseInput);
         }
 

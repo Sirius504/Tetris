@@ -23,7 +23,6 @@ namespace Tetris.View
                 Vector3 mouseScreenPosition = Input.mousePosition;
                 Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
                 Vector3Int mouseGridPosition = grid.WorldToCell(mouseWorldPosition);
-                Debug.Log($"Mouse Screen Position:  {mouseScreenPosition}\n Mouse World Position: {mouseWorldPosition}\n Mouse Grid Position: {mouseGridPosition}");
                 signalBus.Fire(new GridInputMouseSignal(new Vector2Int(mouseGridPosition.x, mouseGridPosition.y)));
             }
         }
