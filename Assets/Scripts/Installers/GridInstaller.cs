@@ -16,7 +16,12 @@ namespace Tetris.Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<GameGrid>().AsSingle().WithArguments(gridSize);
+            var grid = new TetrisGrid(gridSize);
+            Container.Bind<GameGrid>().FromInstance(grid).AsSingle();
+            Container.BindInstance(grid).AsSingle();
+
+            Container.Bind<TetraminoFactory>().AsSingle();
+
             Container.Bind<GridRenderer>().AsSingle();
             Container.BindMemoryPool<View.Cell, View.Cell.Pool>()
                 .WithInitialSize(gridSize.x * gridSize.y / 2)

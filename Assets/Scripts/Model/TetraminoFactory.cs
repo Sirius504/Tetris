@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Tetris.Model
 {
-    internal class TetraminoFactory : IFactory<TetraminoType, Tetramino>
+    public class TetraminoFactory : IFactory<TetraminoType, Tetramino>
     {
         private struct TetraminoInfo
         {
@@ -121,7 +121,7 @@ namespace Tetris.Model
         public Tetramino Create(TetraminoType tetraminoType)
         {
             var tetraminoInfo = tetraminoInfos[tetraminoType];
-            return new Tetramino(tetraminoInfo.matrix, tetraminoInfo.pivot);
+            return new Tetramino(tetraminoInfo.matrix, tetraminoInfo.pivot, tetraminoInfo.color);
         }
     }
 }

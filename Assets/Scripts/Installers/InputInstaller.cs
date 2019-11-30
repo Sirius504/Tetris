@@ -11,7 +11,9 @@ namespace Tetris.Installers
             SignalBusInstaller.Install(Container);
 
             Container.BindInterfacesTo<GridInputTest>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<SpawnTest>().AsSingle().NonLazy();
             Container.DeclareSignal<GridInputMouseSignal>();
+            Container.DeclareSignal<TetraminoLetterSignal>();
         }
     }
 }

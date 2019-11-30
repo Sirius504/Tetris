@@ -1,16 +1,21 @@
-﻿using UnityEngine;
+﻿using Tetris.Model.Enumerators;
+using UnityEngine;
 
 namespace Tetris.Model
 {
     public class Tetramino
     {
-        private int[,] matrix;
-        private Vector2 pivot;
+        public int[,] Matrix { get; }
+        public Vector2Int Size { get; }
+        public Vector2 Pivot { get; }
+        public CellColorsEnum Color { get; }
 
-        public Tetramino(int[,] matrix, Vector2 pivot)
+        public Tetramino(int[,] matrix, Vector2 pivot, CellColorsEnum color)
         {
-            this.matrix = matrix;
-            this.pivot = pivot;
+            Matrix = matrix;
+            Pivot = pivot;
+            Color = color;
+            Size = new Vector2Int(Matrix.GetLength(0), Matrix.GetLength(1));
         }
     }
 }
