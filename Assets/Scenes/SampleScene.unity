@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 263682285}
   - component: {fileID: 263682287}
   - component: {fileID: 263682286}
+  - component: {fileID: 263682281}
   m_Layer: 0
   m_Name: Cup
   m_TagString: Untagged
@@ -234,6 +235,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 3119058177029564755, guid: 06eb4317a1c95264880653644b3ee820,
     type: 3}
+--- !u!114 &263682281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263682279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f2107a936c1a04d81f085b2c60a06b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallRate: 0.5
 --- !u!4 &263682282
 Transform:
   m_ObjectHideFlags: 0
@@ -280,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _components:
   - {fileID: 263682287}
+  - {fileID: 263682281}
   _identifier: 
   _useSceneContext: 1
   _context: {fileID: 0}
@@ -681,8 +696,10 @@ GameObject:
   - component: {fileID: 1867738431}
   - component: {fileID: 1867738430}
   - component: {fileID: 1867738433}
-  - component: {fileID: 1867738434}
   - component: {fileID: 1867738435}
+  - component: {fileID: 1867738434}
+  - component: {fileID: 1867738437}
+  - component: {fileID: 1867738436}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -772,5 +789,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e3988d6d242e1a43ad41b55977a24a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1867738436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867738429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 1867738435}
+  - {fileID: 1867738433}
+  - {fileID: 1867738437}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
+--- !u!114 &1867738437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867738429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc3e73dae5f6dc4429af0feb8159f293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

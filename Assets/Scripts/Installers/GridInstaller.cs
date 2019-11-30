@@ -1,4 +1,5 @@
 using Tetris.Model;
+using Tetris.Signals;
 using Tetris.View;
 using UnityEngine;
 using Zenject;
@@ -19,6 +20,9 @@ namespace Tetris.Installers
             var grid = new TetrisGrid(gridSize);
             Container.Bind<GameGrid>().FromInstance(grid).AsSingle();
             Container.BindInstance(grid).AsSingle();
+            Container.BindSignal<TetraminoShiftSignal>()
+                .ToMethod<TetrisGrid>((x, s) => x.ShiftTetramino(s.Shift))
+                .FromResolve();
 
             Container.Bind<TetraminoFactory>().AsSingle();
 

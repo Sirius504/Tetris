@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Tetris.View
 {
-    public class TetraminoInput : MonoBehaviour
+    public class TetraminoStringInput : MonoBehaviour
     {
         private SignalBus signalBus;
         private bool inputPreviousFrame;

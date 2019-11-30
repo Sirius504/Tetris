@@ -57,6 +57,35 @@ namespace Tetris.Model
             }
         }
 
+        public void ShiftTetramino(Vector2Int shift)
+        {
+            if (currentTetramino == null)
+                return;
+
+            if (ValidateShift(currentTetramino, currentTetraminoPosition, shift))
+            {
+                DeleteTetraminoCells(currentTetramino, currentTetraminoPosition);
+                currentTetraminoPosition = currentTetraminoPosition + shift;
+                CreateTetraminoCells(currentTetramino, currentTetraminoPosition);
+            }
+        }
+
+        private bool ValidateShift(Tetramino currentTetramino, Vector2Int currentTetraminoPosition, Vector2Int shift)
+        {
+            Vector2Int tetraminoNextPosition = currentTetraminoPosition + shift;
+            for (int i = 0; i < currentTetramino.Size.x; i++)
+                for (int j = 0; j < currentTetramino.Size.y; j++)
+                {
+                    if (currentTetramino.Matrix[i, j] != 0)
+                    {
+                        Vector2Int position = tetraminoNextPosition + new Vector2Int(j, -i);
+                        if (OutsideOfGrid(position) || OverlapsWithFallenBlocks(position))
+                            return false;
+                    }
+                }
+            return true;
+        }
+
         private bool ValidateFall(Tetramino currentTetramino, Vector2Int currentTetraminoPosition)
         {
             Vector2Int tetraminoNextPosition = currentTetraminoPosition + new Vector2Int(0, -1);

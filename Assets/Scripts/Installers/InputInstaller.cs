@@ -14,6 +14,7 @@ namespace Tetris.Installers
             Container.BindInterfacesTo<SpawnTest>().AsSingle().NonLazy();
             Container.DeclareSignal<GridInputMouseSignal>();
             Container.DeclareSignal<TetraminoLetterSignal>();
+            Container.DeclareSignal<TetraminoShiftSignal>();
         }
     }
 }
