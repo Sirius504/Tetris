@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Tetris.Model
 {
-    public class TetraminoFactory : IFactory<TetraminoType, Tetramino>
+    public class TetraminoFactory : IFactory<TetraminoTypeEnum, Tetramino>
     {
         private struct TetraminoInfo
         {
@@ -14,18 +14,20 @@ namespace Tetris.Model
             public CellColorsEnum color;
         }
 
-        private readonly Dictionary<TetraminoType, TetraminoInfo> tetraminoInfos =
-            new Dictionary<TetraminoType, TetraminoInfo>()
+        // Here tetraminos written in transposed way so tetraminos store correctly
+        // and when X and Y values passed as indexes you get correct value
+        private readonly Dictionary<TetraminoTypeEnum, TetraminoInfo> tetraminoInfos =
+            new Dictionary<TetraminoTypeEnum, TetraminoInfo>()
             {
                 {
-                    TetraminoType.I, new TetraminoInfo()
+                    TetraminoTypeEnum.I, new TetraminoInfo()
                     {
                         matrix = new int[4, 4]
                         {
-                            {0, 0, 0, 0},
-                            {1, 1, 1, 1},
-                            {0, 0, 0, 0},
-                            {0, 0, 0, 0},
+                            {0, 1, 0, 0},
+                            {0, 1, 0, 0},
+                            {0, 1, 0, 0},
+                            {0, 1, 0, 0},
                         },
                         pivot = new Vector2(1.5f, 1.5f),
                         color = CellColorsEnum.Cyan
@@ -33,13 +35,13 @@ namespace Tetris.Model
                 },
 
                 {
-                    TetraminoType.J, new TetraminoInfo()
+                    TetraminoTypeEnum.J, new TetraminoInfo()
                     {
                         matrix = new int[3, 3]
                         {
-                            {1, 0, 0},
-                            {1, 1, 1},
-                            {0, 0, 0}
+                            {1, 1, 0},
+                            {0, 1, 0},
+                            {0, 1, 0}
                         },
                         pivot = new Vector2(1f, 1f),
                         color = CellColorsEnum.Blue
@@ -47,13 +49,13 @@ namespace Tetris.Model
                 },
 
                 {
-                    TetraminoType.L, new TetraminoInfo()
+                    TetraminoTypeEnum.L, new TetraminoInfo()
                     {
                         matrix = new int[3, 3]
                         {
-                            {0, 0, 1,},
-                            {1, 1, 1,},
-                            {0, 0, 0,},
+                            {0, 1, 0,},
+                            {0, 1, 0,},
+                            {1, 1, 0,},
                         },
                         pivot = new Vector2(1f, 1f),
                         color = CellColorsEnum.Orange
@@ -61,13 +63,14 @@ namespace Tetris.Model
                 },
 
                 {
-                    TetraminoType.O, new TetraminoInfo()
+                    TetraminoTypeEnum.O, new TetraminoInfo()
                     {
-                        matrix = new int[3, 4]
+                        matrix = new int[4, 3]
                         {
-                            {0, 1, 1, 0},
-                            {0, 1, 1, 0},
-                            {0, 0, 0, 0},
+                            {0, 0, 0 },
+                            {1, 1, 0 },
+                            {1, 1, 0 },
+                            {0, 0, 0 },
                         },
                         pivot = new Vector2(1.5f, 0.5f),
                         color = CellColorsEnum.Yellow
@@ -75,13 +78,13 @@ namespace Tetris.Model
                 },
 
                 {
-                    TetraminoType.S, new TetraminoInfo()
+                    TetraminoTypeEnum.S, new TetraminoInfo()
                     {
                         matrix = new int[3, 3]
                         {
-                            {0, 1, 1},
+                            {0, 1, 0},
                             {1, 1, 0},
-                            {0, 0, 0},
+                            {1, 0, 0},
                         },
                         pivot = new Vector2(1f, 1f),
                         color = CellColorsEnum.Green
@@ -89,13 +92,13 @@ namespace Tetris.Model
                 },
 
                 {
-                    TetraminoType.T, new TetraminoInfo()
+                    TetraminoTypeEnum.T, new TetraminoInfo()
                     {
                         matrix = new int[3, 3]
                         {
                             {0, 1, 0},
-                            {1, 1, 1},
-                            {0, 0, 0},
+                            {1, 1, 0},
+                            {0, 1, 0},
                         },
                         pivot = new Vector2(1f, 1f),
                         color = CellColorsEnum.Magenta
@@ -103,13 +106,13 @@ namespace Tetris.Model
                 },
 
                 {
-                    TetraminoType.Z, new TetraminoInfo()
+                    TetraminoTypeEnum.Z, new TetraminoInfo()
                     {
                         matrix = new int[3, 3]
                         {
+                            {1, 0, 0},
                             {1, 1, 0},
-                            {0, 1, 1},
-                            {0, 0, 0},
+                            {0, 1, 0},
                         },
                         pivot = new Vector2(1f, 1f),
                         color = CellColorsEnum.Red
@@ -118,7 +121,7 @@ namespace Tetris.Model
             };
 
 
-        public Tetramino Create(TetraminoType tetraminoType)
+        public Tetramino Create(TetraminoTypeEnum tetraminoType)
         {
             var tetraminoInfo = tetraminoInfos[tetraminoType];
             return new Tetramino(tetraminoInfo.matrix, tetraminoInfo.pivot, tetraminoInfo.color);

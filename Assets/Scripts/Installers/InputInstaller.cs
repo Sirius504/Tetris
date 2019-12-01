@@ -15,6 +15,7 @@ namespace Tetris.Installers
             Container.DeclareSignal<GridInputMouseSignal>();
             Container.DeclareSignal<TetraminoLetterSignal>();
             Container.DeclareSignal<TetraminoShiftSignal>();
+            Container.DeclareSignal<TetraminoRotationSignal>();
         }
     }
 }

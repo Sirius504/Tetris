@@ -1,6 +1,6 @@
 ﻿namespace Tetris.Model.Enumerators
 {
-    public enum TetraminoType
+    public enum TetraminoTypeEnum
     {
         L,
         J,

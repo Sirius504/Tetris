@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Tetris.Model.Enumerators;
 using UnityEngine;
 
 namespace Tetris.Model
@@ -28,7 +29,7 @@ namespace Tetris.Model
             // Tetraminos processing starts from top left corner of their bounding box
             Vector2Int startPosition = new Vector2Int(startPositionX, Size.y - 1);
 
-            if (ValidateSpawn(newTetramino, startPosition))
+            if (ValidateTetramino(newTetramino, startPosition, (minoXY) => !OverlapsWithFallenBlocks(minoXY)))
             {
                 CreateTetraminoCells(newTetramino, startPosition);
                 currentTetramino = newTetramino;
@@ -43,10 +44,11 @@ namespace Tetris.Model
             if (currentTetramino == null)
                 return;
 
-            if (ValidateFall(currentTetramino, currentTetraminoPosition))
+            var newTetraminoPosition = currentTetraminoPosition + new Vector2Int(0, -1);
+            if (ValidateTetramino(currentTetramino, newTetraminoPosition, MinoInValidPosition))
             {
                 DeleteTetraminoCells(currentTetramino, currentTetraminoPosition);
-                currentTetraminoPosition = currentTetraminoPosition + new Vector2Int(0, -1);
+                currentTetraminoPosition = newTetraminoPosition;
                 CreateTetraminoCells(currentTetramino, currentTetraminoPosition);
             }
             else
@@ -62,55 +64,38 @@ namespace Tetris.Model
             if (currentTetramino == null)
                 return;
 
-            if (ValidateShift(currentTetramino, currentTetraminoPosition, shift))
+            Vector2Int newTetraminoPosition = currentTetraminoPosition + shift;
+            if (ValidateTetramino(currentTetramino, newTetraminoPosition, MinoInValidPosition))
             {
                 DeleteTetraminoCells(currentTetramino, currentTetraminoPosition);
-                currentTetraminoPosition = currentTetraminoPosition + shift;
+                currentTetraminoPosition = newTetraminoPosition;
                 CreateTetraminoCells(currentTetramino, currentTetraminoPosition);
             }
         }
 
-        private bool ValidateShift(Tetramino currentTetramino, Vector2Int currentTetraminoPosition, Vector2Int shift)
+        public void RotateTetramino(RotationEnum rotation)
         {
-            Vector2Int tetraminoNextPosition = currentTetraminoPosition + shift;
-            for (int i = 0; i < currentTetramino.Size.x; i++)
-                for (int j = 0; j < currentTetramino.Size.y; j++)
-                {
-                    if (currentTetramino.Matrix[i, j] != 0)
-                    {
-                        Vector2Int position = tetraminoNextPosition + new Vector2Int(j, -i);
-                        if (OutsideOfGrid(position) || OverlapsWithFallenBlocks(position))
-                            return false;
-                    }
-                }
-            return true;
+            if (currentTetramino == null)
+                return;
+
+            var newTetramino = currentTetramino.GetTetraminoRotated(rotation);
+            if (ValidateTetramino(newTetramino, currentTetraminoPosition, MinoInValidPosition))
+            {
+                DeleteTetraminoCells(currentTetramino, currentTetraminoPosition);
+                currentTetramino = newTetramino;
+                CreateTetraminoCells(currentTetramino, currentTetraminoPosition);
+            }
         }
 
-        private bool ValidateFall(Tetramino currentTetramino, Vector2Int currentTetraminoPosition)
+        private bool ValidateTetramino(Tetramino tetramino, Vector2Int tetraminoPosition, Func<Vector2Int, bool> correctMinoPredicate)
         {
-            Vector2Int tetraminoNextPosition = currentTetraminoPosition + new Vector2Int(0, -1);
-            for (int i = 0; i < currentTetramino.Size.x; i++)
-                for (int j = 0; j < currentTetramino.Size.y; j++)
+            for (int j = 0; j < tetramino.Size.y; j++)
+                for (int i = 0; i < tetramino.Size.x; i++)
                 {
-                    if (currentTetramino.Matrix[i, j] != 0)
+                    if (tetramino.Matrix[i, j] != 0)
                     {
-                        Vector2Int position = tetraminoNextPosition + new Vector2Int(j, -i);
-                        if (OutsideOfGrid(position) || OverlapsWithFallenBlocks(position))
-                            return false;
-                    }
-                }
-            return true;
-        }
-
-        private bool ValidateSpawn(Tetramino newTetramino, Vector2Int startPosition)
-        {
-            for (int i = 0; i < newTetramino.Size.x; i++)
-                for (int j = 0; j < newTetramino.Size.y; j++)
-                {
-                    if (newTetramino.Matrix[i, j] != 0)
-                    {
-                        Vector2Int position = startPosition + new Vector2Int(j, -i);
-                        if (OverlapsWithFallenBlocks(position))
+                        Vector2Int minoPosition = tetraminoPosition + new Vector2Int(i, -j);
+                        if (!correctMinoPredicate(minoPosition))
                             return false;
                     }
                 }
@@ -120,36 +105,53 @@ namespace Tetris.Model
         private void CreateTetraminoCells(Tetramino tetramino, Vector2Int tetraminoPosition)
         {
             currentTetraminoCells = new List<Cell>();
-            for (int i = 0; i < tetramino.Size.x; i++)
-                for (int j = 0; j < tetramino.Size.y; j++)
+            for (int j = 0; j < tetramino.Size.y; j++)
+                for (int i = 0; i < tetramino.Size.x; i++)
                 {
                     if (tetramino.Matrix[i, j] != 0)
                     {
-                        Vector2Int position = tetraminoPosition + new Vector2Int(j, -i);
-                        currentTetraminoCells.Add(CreateCell(position, tetramino.Color));
+                        Vector2Int minoPosition = tetraminoPosition + new Vector2Int(i, -j);
+                        currentTetraminoCells.Add(CreateCell(minoPosition, tetramino.Color));
                     }
                 }
         }
 
         private void DeleteTetraminoCells(Tetramino tetramino, Vector2Int tetraminoPosition)
         {
-            for (int i = 0; i < tetramino.Size.x; i++)
-                for (int j = 0; j < tetramino.Size.y; j++)
+            for (int j = 0; j < tetramino.Size.y; j++)
+                for (int i = 0; i < tetramino.Size.x; i++)
                 {
                     if (tetramino.Matrix[i, j] != 0)
                     {
-                        Vector2Int position = tetraminoPosition + new Vector2Int(j, -i);
-                        currentTetraminoCells.Remove(Cells[position.x, position.y]);
-                        DeleteCell(position);
+                        Vector2Int minoPosition = tetraminoPosition + new Vector2Int(i, -j);
+                        currentTetraminoCells.Remove(Cells[minoPosition.x, minoPosition.y]);
+                        DeleteCell(minoPosition);
                     }
                 }
             if (currentTetraminoCells.Count > 0)
                 throw new InvalidOperationException();
         }
 
+        private bool MinoInValidPosition(Vector2Int minoXY)
+        {
+            if (OutsideOfGrid(minoXY))
+                return false;
+            if (OverlapsWithFallenBlocks(minoXY))
+                return false;
+            return true;
+        }
+
         private bool OverlapsWithFallenBlocks(Vector2Int position)
         {
-            var cellAtPosition = Cells[position.x, position.y];
+            Cell cellAtPosition = null;
+            try
+            {
+                cellAtPosition = Cells[position.x, position.y];
+            }
+            catch
+            {
+                ; // breakpoint
+            }
             return (cellAtPosition != null && !currentTetraminoCells.Contains(cellAtPosition));
         }
 

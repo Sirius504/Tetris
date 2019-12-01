@@ -23,6 +23,9 @@ namespace Tetris.Installers
             Container.BindSignal<TetraminoShiftSignal>()
                 .ToMethod<TetrisGrid>((x, s) => x.ShiftTetramino(s.Shift))
                 .FromResolve();
+            Container.BindSignal<TetraminoRotationSignal>()
+                .ToMethod<TetrisGrid>((x, s) => x.RotateTetramino(s.Rotation))
+                .FromResolve();
 
             Container.Bind<TetraminoFactory>().AsSingle();
 

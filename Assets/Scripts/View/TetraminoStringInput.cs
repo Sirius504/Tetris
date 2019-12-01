@@ -32,7 +32,7 @@ namespace Tetris.View
 
         private void HandleInput(string inputString)
         {
-            if (Enum.TryParse(inputString.ToUpper(), out TetraminoType result))            
+            if (Enum.TryParse(inputString.ToUpper(), out TetraminoTypeEnum result))            
                 signalBus.Fire(new TetraminoLetterSignal(result));
         }
     }

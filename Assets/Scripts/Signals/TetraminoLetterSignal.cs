@@ -4,9 +4,9 @@ namespace Tetris.Signals
 {
     public class TetraminoLetterSignal
     {
-        public TetraminoType TetraminoType { get; }
+        public TetraminoTypeEnum TetraminoType { get; }
 
-        public TetraminoLetterSignal(TetraminoType type)
+        public TetraminoLetterSignal(TetraminoTypeEnum type)
         {
             TetraminoType = type;
         }
