@@ -11,8 +11,6 @@ namespace Tetris.View
         private bool horizontalInputPreviousFrame;
         private bool verticalInputPreviousFrame;
 
-        //private bool verticalInputPreviousFrame;
-
         [Inject]
         public void Construct(SignalBus signalBus)
         {
