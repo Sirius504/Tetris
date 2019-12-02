@@ -22,7 +22,9 @@ namespace Tetris.Model.Settings
         public void OnEnable()
         {
             InitializeMaterialsDictionary();
-            Validate();
+            var colorsWithMissingMaterials = GetColorsWithMissingMaterials();
+            if (colorsWithMissingMaterials.Count > 0)
+                throw new MissingMemberException($"Missing materials for colors: {string.Join(", ", colorsWithMissingMaterials)}");
         }
 
         public Material GetMaterial(CellColorsEnum color)
@@ -36,13 +38,21 @@ namespace Tetris.Model.Settings
         public void InitializeMaterialsDictionary()
         {
             colorMaterials = new Dictionary<CellColorsEnum, Material>();
-            foreach (var kvp in colorMaterialsArray)
-                colorMaterials.Add(kvp.color, kvp.material);            
+            try
+            {
+                foreach (var kvp in colorMaterialsArray)
+                    colorMaterials.Add(kvp.color, kvp.material);
+            }
+            catch (ArgumentException e)
+            {
+                throw new ArgumentException($"Duplicate color in Color Materials", e);
+            }
         }
 
-        private void Validate()
+        public List<CellColorsEnum> GetColorsWithMissingMaterials()
         {
-            List<string> colorsWithoutMaterials = new List<string>();
+            InitializeMaterialsDictionary();
+            var result = new List<CellColorsEnum>();
             foreach (var color in (CellColorsEnum[])Enum.GetValues(typeof(CellColorsEnum)))
             {
                 try
@@ -53,15 +63,14 @@ namespace Tetris.Model.Settings
                 }
                 catch (KeyNotFoundException)
                 {
-                    colorsWithoutMaterials.Add(color.ToString());
+                    result.Add(color);
                 }
                 catch (MissingMemberException)
                 {
-                    colorsWithoutMaterials.Add(color.ToString());
+                    result.Add(color);
                 }
             }
-            if (colorsWithoutMaterials.Count > 0)
-                throw new MissingMemberException($"Missing materials for colors: {string.Join(", ", colorsWithoutMaterials)}");
+            return result;
         }
     }
 }
