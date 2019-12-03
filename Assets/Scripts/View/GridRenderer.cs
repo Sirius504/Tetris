@@ -40,7 +40,6 @@ namespace Tetris.View
             var newPosition = gridComponent.CellToLocal(new Vector3Int(position.x, position.y, 0)) + gridCornerOffset;
             cell.SetLocalPosition(newPosition);
             cell.SetLocalScale(gridComponent.cellSize);
-            cell.gameObject.SetActive(true);
         }
 
         private void DespawnCell(Vector2Int position)

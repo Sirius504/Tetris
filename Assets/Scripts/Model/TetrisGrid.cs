@@ -53,10 +53,15 @@ namespace Tetris.Model
             }
             else
             {
-                currentTetraminoCells.Clear();
-                currentTetraminoPosition = Vector2Int.zero;
-                currentTetramino = null;
+                ReleaseCurrentTetramino();
             }
+        }
+
+        private void ReleaseCurrentTetramino()
+        {
+            currentTetraminoCells.Clear();
+            currentTetraminoPosition = Vector2Int.zero;
+            currentTetramino = null;
         }
 
         public void ShiftTetramino(Vector2Int shift)

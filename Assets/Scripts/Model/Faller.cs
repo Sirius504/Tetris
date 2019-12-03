@@ -2,25 +2,28 @@
 using UnityEngine;
 using Zenject;
 
-public class Faller : MonoBehaviour
+namespace Tetris.Model
 {
-    private TetrisGrid tetrisGrid;
-    public float fallRate = 1f;
-    private float tickTimer;
-
-    [Inject]
-    public void Construct(TetrisGrid tetrisGrid)
+    public class Faller : MonoBehaviour
     {
-        this.tetrisGrid = tetrisGrid;
-    }
+        private TetrisGrid tetrisGrid;
+        public float fallRate = 1f;
+        private float tickTimer;
 
-    void Update()
-    {
-        tickTimer += Time.deltaTime;
-        if (tickTimer >= fallRate)
+        [Inject]
+        public void Construct(TetrisGrid tetrisGrid)
         {
-            tickTimer -= fallRate;
-            tetrisGrid.ApplyGravity();
+            this.tetrisGrid = tetrisGrid;
         }
-    }
+
+        private void Update()
+        {
+            tickTimer += Time.deltaTime;
+            if (tickTimer >= fallRate)
+            {
+                tickTimer -= fallRate;
+                tetrisGrid.ApplyGravity();
+            }
+        }
+    } 
 }
