@@ -9,12 +9,15 @@ namespace Tetris.Model
         public Vector2Int Size { get; }
         public Cell[,] Cells { get; }
 
+        public Action<Vector2Int, Cell> OnCellCreated;
+        public Action<Vector2Int> OnCellDeleted;
+
         public GameGrid(Vector2Int size)
         {
             if (size.x <= 0 || size.y <= 0)
                 throw new ArgumentOutOfRangeException("size", size, "At least one of Size vector components is less or equal zero.");
             Size = size;
-            Cells = GenerateEmptyGrid(size);
+            Cells = new Cell[size.x, size.y];
         }
 
         public Cell CreateCell(Vector2Int position, CellColorsEnum color)
@@ -25,7 +28,8 @@ namespace Tetris.Model
                 throw new ArgumentException($"Existing cell found at passed coordinates {position}.");
 
             var result = new Cell(color);
-            Cells[position.x, position.y] = result; 
+            Cells[position.x, position.y] = result;
+            OnCellCreated?.Invoke(position, result);
             return result;
         }
 
@@ -36,12 +40,6 @@ namespace Tetris.Model
                 throw new ArgumentOutOfRangeException("argument", argument, "Passed coordinates are out of grid range.");
         }
 
-        private Cell[,] GenerateEmptyGrid(Vector2Int size)
-        {
-            Cell[,] result = new Cell[size.x, size.y];
-            return result;
-        }
-
         internal void DeleteCell(Vector2Int position)
         {
             CheckIfArgumentsFallWithinSize(position);
@@ -49,6 +47,7 @@ namespace Tetris.Model
             if (Cells[position.x, position.y] == null)
                 return;
             Cells[position.x, position.y] = null;
+            OnCellDeleted?.Invoke(position);
         }
     }
 }

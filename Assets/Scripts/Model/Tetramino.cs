@@ -14,13 +14,13 @@ namespace Tetris.Model
 
         private readonly int[,] clockwiseRotationMatrix =
         {
-            {0, -1},
-            {1,  0}
+            {0,  1},
+            {-1, 0}
         };
         private readonly int[,] counterClockwiseRotationMatrix =
         {
-            {0,  1},
-            {-1, 0}
+            {0, -1},
+            {1,  0}
         };
 
         public Tetramino(int[,] matrix, Vector2 pivot, CellColorsEnum color)

@@ -144,14 +144,7 @@ namespace Tetris.Model
         private bool OverlapsWithFallenBlocks(Vector2Int position)
         {
             Cell cellAtPosition = null;
-            try
-            {
-                cellAtPosition = Cells[position.x, position.y];
-            }
-            catch
-            {
-                ; // breakpoint
-            }
+            cellAtPosition = Cells[position.x, position.y];
             return (cellAtPosition != null && !currentTetraminoCells.Contains(cellAtPosition));
         }
 

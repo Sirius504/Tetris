@@ -27,47 +27,29 @@ namespace Tetris.View
             this.gridComponent = gridComponent;
             gridCornerOffset = gridComponent.cellSize / 2f;
             cells = new Cell[gridModel.Size.x, gridModel.Size.y];
+
+            gridModel.OnCellCreated += SpawnCell;
+            gridModel.OnCellDeleted += DespawnCell;
         }
 
-        private void LateUpdate()
-        {
-            CleanGrid();
-            DrawGrid();
-        }
-
-        private void CleanGrid()
-        {
-            for (int j = 0; j < gridModel.Size.y; j++)
-                for (int i = 0; i < gridModel.Size.x; i++)
-                {
-                    if (cells[i, j] != null)
-                    {
-                        cellPool.Despawn(cells[i, j]);
-                        cells[i, j] = null;
-                    }
-                }
-        }
-
-        private void DrawGrid()
-        {
-            for (int j = 0; j < gridModel.Size.y; j++)
-                for (int i = 0; i < gridModel.Size.x; i++)
-                {
-                    var cellData = gridModel.Cells[i, j];
-                    if (cellData != null)
-                        cells[i, j] = SpawnCell(i, j, cellData);
-                }
-        }
-
-        private Cell SpawnCell(int x, int y, Model.Cell cellData)
+        private void SpawnCell(Vector2Int position, Model.Cell cellData)
         {
             var cell = cellPool.Spawn();
+            cells[position.x, position.y] = cell;
             cell.SetColor(cellData.Color);
-            var newPosition = gridComponent.CellToLocal(new Vector3Int(x, y, 0)) + gridCornerOffset;
+            var newPosition = gridComponent.CellToLocal(new Vector3Int(position.x, position.y, 0)) + gridCornerOffset;
             cell.SetLocalPosition(newPosition);
             cell.SetLocalScale(gridComponent.cellSize);
             cell.gameObject.SetActive(true);
-            return cell;
+        }
+
+        private void DespawnCell(Vector2Int position)
+        {
+            if (cells[position.x, position.y] != null)
+            {
+                cellPool.Despawn(cells[position.x, position.y]);
+                cells[position.x, position.y] = null;
+            }
         }
     }
 }
