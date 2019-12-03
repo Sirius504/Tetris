@@ -1,4 +1,5 @@
-﻿using Tetris.Model;
+﻿using System;
+using Tetris.Model;
 using UnityEngine;
 using Zenject;
 
@@ -32,11 +33,13 @@ namespace Tetris.View
             gridModel.OnCellDeleted += DespawnCell;
         }
 
-        private void SpawnCell(Vector2Int position, Model.Cell cellData)
+        private void SpawnCell(Vector2Int position, Mino minoData)
         {
-            var cell = cellPool.Spawn();
+            if (minoData == null)
+                throw new ArgumentNullException("minoData");
+            var cell = cellPool.Spawn();            
             cells[position.x, position.y] = cell;
-            cell.SetColor(cellData.Color);
+            cell.SetColor(minoData.Color);
             var newPosition = gridComponent.CellToLocal(new Vector3Int(position.x, position.y, 0)) + gridCornerOffset;
             cell.SetLocalPosition(newPosition);
             cell.SetLocalScale(gridComponent.cellSize);

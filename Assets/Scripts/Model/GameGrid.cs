@@ -7,9 +7,9 @@ namespace Tetris.Model
     public class GameGrid
     {
         public Vector2Int Size { get; }
-        public Cell[,] Cells { get; }
+        public Mino[,] Cells { get; }
 
-        public Action<Vector2Int, Cell> OnCellCreated;
+        public Action<Vector2Int, Mino> OnCellCreated;
         public Action<Vector2Int> OnCellDeleted;
 
         public GameGrid(Vector2Int size)
@@ -17,17 +17,17 @@ namespace Tetris.Model
             if (size.x <= 0 || size.y <= 0)
                 throw new ArgumentOutOfRangeException("size", size, "At least one of Size vector components is less or equal zero.");
             Size = size;
-            Cells = new Cell[size.x, size.y];
+            Cells = new Mino[size.x, size.y];
         }
 
-        public Cell CreateCell(Vector2Int position, CellColorsEnum color)
+        public Mino CreateCell(Vector2Int position, CellColorsEnum color)
         {
             CheckIfArgumentsFallWithinSize(position);
 
             if (Cells[position.x, position.y] != null)
                 throw new ArgumentException($"Existing cell found at passed coordinates {position}.");
 
-            var result = new Cell(color);
+            var result = new Mino(color);
             Cells[position.x, position.y] = result;
             OnCellCreated?.Invoke(position, result);
             return result;

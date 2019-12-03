@@ -2,11 +2,11 @@
 
 namespace Tetris.Model
 {
-    public class Cell
+    public class Mino
     {
         public CellColorsEnum Color { get; }
 
-        public Cell(CellColorsEnum color)
+        public Mino(CellColorsEnum color)
         {
             Color = color;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tetris.Model.Enumerators;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Tetris.Model
         private const int SPAWN_ROWS = 2;
         private Tetramino currentTetramino;
         private Vector2Int currentTetraminoPosition;
-        private List<Cell> currentTetraminoCells;
+        private List<Mino> currentTetraminoCells;
 
         public event Action OnSpawnFailed;
         public event Action<HashSet<int>> OnTetraminoReleased;
@@ -56,9 +57,29 @@ namespace Tetris.Model
             else
             {
                 HashSet<int> linesAffected = GetLinesOccupiedByTetramino(currentTetramino, currentTetraminoPosition);
+                var filledLines = GetFilledLines(linesAffected);
+                if (filledLines.Count > 0)
+                {
+                    ClearLines(filledLines);
+                    int topLine = filledLines.Max();
+                    PushRowsDown(topLine + 1, filledLines.Count);
+                }
                 ReleaseCurrentTetramino();
                 OnTetraminoReleased?.Invoke(linesAffected);
             }
+        }
+
+        private void PushRowsDown(int startFrom, int distance)
+        {
+            for (int j = startFrom; j < Cells.GetLength(1); j++)
+                for (int i = 0; i < Cells.GetLength(0); i++)
+                {
+                    Cells[i, j - distance] = Cells[i, j];
+                    Cells[i, j] = null;
+                    OnCellDeleted?.Invoke(new Vector2Int(i, j));
+                    if (Cells[i, j - distance] != null)
+                        OnCellCreated?.Invoke(new Vector2Int(i, j - distance), Cells[i, j - distance]);
+                }
         }
 
         public HashSet<int> GetFilledLines(HashSet<int> linesIndices)
@@ -75,15 +96,11 @@ namespace Tetris.Model
             return result;
         }
 
-        private HashSet<int> GetLinesOccupiedByTetramino(Tetramino currentTetramino, Vector2Int currentTetraminoPosition)
+        private HashSet<int> GetLinesOccupiedByTetramino(Tetramino tetramino, Vector2Int tetraminoPosition)
         {
             var result = new HashSet<int>();
-            for (int j = 0; j < currentTetramino.Size.y; j++)
-                for (int i = 0; i < currentTetramino.Size.x; i++)
-                {
-                    if (currentTetramino.Matrix[i, j] != 0)
-                        result.Add(currentTetraminoPosition.y - j);
-                }
+            foreach (var minoPosition in GetMinosPositionsInGrid(tetramino, tetraminoPosition))
+                result.Add(minoPosition.y);
             return result;
         }
 
@@ -92,6 +109,13 @@ namespace Tetris.Model
             currentTetraminoCells.Clear();
             currentTetraminoPosition = Vector2Int.zero;
             currentTetramino = null;
+        }
+
+        private void ClearLines(HashSet<int> linesFilled)
+        {
+            foreach (int j in linesFilled)
+                for (int i = 0; i < Cells.GetLength(0); i++)
+                    DeleteCell(new Vector2Int(i, j));
         }
 
         public void ShiftTetramino(Vector2Int shift)
@@ -129,13 +153,12 @@ namespace Tetris.Model
                 if (!correctMinoPredicate(minoPosition))
                     return false;
             }
-
             return true;
         }
 
         private void CreateTetraminoCells(Tetramino tetramino, Vector2Int tetraminoPosition)
         {
-            currentTetraminoCells = new List<Cell>();
+            currentTetraminoCells = new List<Mino>();
             foreach (var minoPosition in GetMinosPositionsInGrid(tetramino, tetraminoPosition))
                 currentTetraminoCells.Add(CreateCell(minoPosition, tetramino.Color));
         }
@@ -177,7 +200,7 @@ namespace Tetris.Model
 
         private bool OverlapsWithFallenBlocks(Vector2Int position)
         {
-            Cell cellAtPosition = null;
+            Mino cellAtPosition = null;
             cellAtPosition = Cells[position.x, position.y];
             return (cellAtPosition != null && !currentTetraminoCells.Contains(cellAtPosition));
         }
