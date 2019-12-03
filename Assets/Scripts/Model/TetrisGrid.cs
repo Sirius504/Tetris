@@ -13,6 +13,8 @@ namespace Tetris.Model
         private List<Cell> currentTetraminoCells;
 
         public event Action OnSpawnFailed;
+        public event Action<HashSet<int>> OnTetraminoReleased;
+        public event Action OnLineCleared;
 
         public TetrisGrid(Vector2Int size) : base(size)
         {
@@ -53,8 +55,36 @@ namespace Tetris.Model
             }
             else
             {
+                HashSet<int> linesAffected = GetLinesOccupiedByTetramino(currentTetramino, currentTetraminoPosition);
                 ReleaseCurrentTetramino();
+                OnTetraminoReleased?.Invoke(linesAffected);
             }
+        }
+
+        public HashSet<int> GetFilledLines(HashSet<int> linesIndices)
+        {
+            HashSet<int> result = new HashSet<int>();
+            foreach (int j in linesIndices)
+            {
+                bool filled = true;
+                for (int i = 0; i < Cells.GetLength(0); i++)
+                    filled &= Cells[i, j] != null;
+                if (filled)
+                    result.Add(j);
+            }
+            return result;
+        }
+
+        private HashSet<int> GetLinesOccupiedByTetramino(Tetramino currentTetramino, Vector2Int currentTetraminoPosition)
+        {
+            var result = new HashSet<int>();
+            for (int j = 0; j < currentTetramino.Size.y; j++)
+                for (int i = 0; i < currentTetramino.Size.x; i++)
+                {
+                    if (currentTetramino.Matrix[i, j] != 0)
+                        result.Add(currentTetraminoPosition.y - j);
+                }
+            return result;
         }
 
         private void ReleaseCurrentTetramino()

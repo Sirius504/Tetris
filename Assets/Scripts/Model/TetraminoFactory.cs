@@ -15,7 +15,7 @@ namespace Tetris.Model
         }
 
         // Here tetraminos written in transposed way so tetraminos store correctly
-        // and when X and Y values passed as indexes you get correct value
+        // and when X and Y values passed as indices you get correct value
         private readonly Dictionary<TetraminoTypeEnum, TetraminoInfo> tetraminoInfos =
             new Dictionary<TetraminoTypeEnum, TetraminoInfo>()
             {
