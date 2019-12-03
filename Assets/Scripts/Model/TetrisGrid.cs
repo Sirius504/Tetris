@@ -94,47 +94,46 @@ namespace Tetris.Model
 
         private bool ValidateTetramino(Tetramino tetramino, Vector2Int tetraminoPosition, Func<Vector2Int, bool> correctMinoPredicate)
         {
-            for (int j = 0; j < tetramino.Size.y; j++)
-                for (int i = 0; i < tetramino.Size.x; i++)
-                {
-                    if (tetramino.Matrix[i, j] != 0)
-                    {
-                        Vector2Int minoPosition = tetraminoPosition + new Vector2Int(i, -j);
-                        if (!correctMinoPredicate(minoPosition))
-                            return false;
-                    }
-                }
+            foreach (var minoPosition in GetMinosPositionsInGrid(tetramino, tetraminoPosition))
+            {
+                if (!correctMinoPredicate(minoPosition))
+                    return false;
+            }
+
             return true;
         }
 
         private void CreateTetraminoCells(Tetramino tetramino, Vector2Int tetraminoPosition)
         {
             currentTetraminoCells = new List<Cell>();
-            for (int j = 0; j < tetramino.Size.y; j++)
-                for (int i = 0; i < tetramino.Size.x; i++)
-                {
-                    if (tetramino.Matrix[i, j] != 0)
-                    {
-                        Vector2Int minoPosition = tetraminoPosition + new Vector2Int(i, -j);
-                        currentTetraminoCells.Add(CreateCell(minoPosition, tetramino.Color));
-                    }
-                }
+            foreach (var minoPosition in GetMinosPositionsInGrid(tetramino, tetraminoPosition))
+                currentTetraminoCells.Add(CreateCell(minoPosition, tetramino.Color));
         }
 
         private void DeleteTetraminoCells(Tetramino tetramino, Vector2Int tetraminoPosition)
         {
+            foreach (var minoPosition in GetMinosPositionsInGrid(tetramino, tetraminoPosition))
+            {
+                currentTetraminoCells.Remove(Cells[minoPosition.x, minoPosition.y]);
+                DeleteCell(minoPosition);
+            }
+
+            if (currentTetraminoCells.Count > 0)
+                throw new InvalidOperationException();
+        }
+
+        public List<Vector2Int> GetMinosPositionsInGrid(Tetramino tetramino, Vector2Int tetraminoPosition)
+        {
+            var result = new List<Vector2Int>();
             for (int j = 0; j < tetramino.Size.y; j++)
                 for (int i = 0; i < tetramino.Size.x; i++)
                 {
                     if (tetramino.Matrix[i, j] != 0)
                     {
-                        Vector2Int minoPosition = tetraminoPosition + new Vector2Int(i, -j);
-                        currentTetraminoCells.Remove(Cells[minoPosition.x, minoPosition.y]);
-                        DeleteCell(minoPosition);
+                        result.Add(tetraminoPosition + new Vector2Int(i, -j));
                     }
                 }
-            if (currentTetraminoCells.Count > 0)
-                throw new InvalidOperationException();
+            return result;
         }
 
         private bool MinoInValidPosition(Vector2Int minoXY)
