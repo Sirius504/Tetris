@@ -14,7 +14,7 @@ namespace Tetris.Model
         private List<Mino> currentTetraminoCells;
 
         public event Action OnSpawnFailed;
-        public event Action<HashSet<int>> OnTetraminoReleased;
+        public event Action OnTetraminoReleased;
         public event Action OnLineCleared;
 
         public TetrisGrid(Vector2Int size) : base(size)
@@ -56,16 +56,21 @@ namespace Tetris.Model
             }
             else
             {
-                HashSet<int> linesAffected = GetLinesOccupiedByTetramino(currentTetramino, currentTetraminoPosition);
-                var filledLines = GetFilledLines(linesAffected);
-                if (filledLines.Count > 0)
-                {
-                    ClearLines(filledLines);
-                    int topLine = filledLines.Max();
-                    PushRowsDown(topLine + 1, filledLines.Count);
-                }
+                HandleFilledLines();
                 ReleaseCurrentTetramino();
-                OnTetraminoReleased?.Invoke(linesAffected);
+                OnTetraminoReleased?.Invoke();
+            }
+        }
+
+        private void HandleFilledLines()
+        {
+            HashSet<int> linesAffected = GetLinesOccupiedByTetramino(currentTetramino, currentTetraminoPosition);
+            var filledLines = GetFilledLines(linesAffected);
+            if (filledLines.Count > 0)
+            {
+                ClearLines(filledLines);
+                int topLine = filledLines.Max();
+                PushRowsDown(topLine + 1, filledLines.Count);
             }
         }
 
@@ -132,16 +137,29 @@ namespace Tetris.Model
             }
         }
 
-        public void RotateTetramino(RotationEnum rotation)
+        public void RotateTetramino(RotationDirectionEnum rotation)
         {
             if (currentTetramino == null)
                 return;
 
             var newTetramino = currentTetramino.GetTetraminoRotated(rotation);
-            if (ValidateTetramino(newTetramino, currentTetraminoPosition, MinoInValidPosition))
+            var wallKicks = WallKicksData.Get(currentTetramino.Type, currentTetramino.CurrentRotationState, rotation);
+            int wallKickIndex = 0;
+            Vector2Int newPosition = Vector2Int.zero;
+            bool valid = false;
+            do
             {
+                newPosition = currentTetraminoPosition + wallKicks[wallKickIndex];
+                valid = ValidateTetramino(newTetramino, newPosition, MinoInValidPosition);
+                wallKickIndex++;
+            }
+            while (!valid && wallKickIndex < wallKicks.Count);
+            
+            if (valid)
+            {                
                 DeleteTetraminoCells(currentTetramino, currentTetraminoPosition);
                 currentTetramino = newTetramino;
+                currentTetraminoPosition = newPosition;
                 CreateTetraminoCells(currentTetramino, currentTetraminoPosition);
             }
         }

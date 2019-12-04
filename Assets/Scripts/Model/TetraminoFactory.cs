@@ -124,7 +124,7 @@ namespace Tetris.Model
         public Tetramino Create(TetraminoTypeEnum tetraminoType)
         {
             var tetraminoInfo = tetraminoInfos[tetraminoType];
-            return new Tetramino(tetraminoInfo.matrix, tetraminoInfo.pivot, tetraminoInfo.color);
+            return new Tetramino(tetraminoType, tetraminoInfo.matrix, tetraminoInfo.pivot, RotationStateEnum._0, tetraminoInfo.color);
         }
     }
 }

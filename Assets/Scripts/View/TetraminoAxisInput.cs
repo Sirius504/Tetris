@@ -31,9 +31,9 @@ namespace Tetris.View
             if (yAxis != 0 && !verticalInputPreviousFrame)
             {
                 verticalInputPreviousFrame = true;
-                RotationEnum rotation = yAxis > 0
-                    ? RotationEnum.Clockwise
-                    : RotationEnum.Counterclockwise;
+                RotationDirectionEnum rotation = yAxis > 0
+                    ? RotationDirectionEnum.Clockwise
+                    : RotationDirectionEnum.Counterclockwise;
                 InputRotation(rotation);
             }
 
@@ -46,7 +46,7 @@ namespace Tetris.View
             signalBus.Fire(new TetraminoShiftSignal(input));
         }
 
-        private void InputRotation(RotationEnum rotation)
+        private void InputRotation(RotationDirectionEnum rotation)
         {
             signalBus.Fire(new TetraminoRotationSignal(rotation));
         }

@@ -4,9 +4,9 @@ namespace Tetris.Signals
 {
     public class TetraminoRotationSignal
     {
-        public RotationEnum Rotation { get; }
+        public RotationDirectionEnum Rotation { get; }
 
-        public TetraminoRotationSignal(RotationEnum rotation)
+        public TetraminoRotationSignal(RotationDirectionEnum rotation)
         {
             Rotation = rotation;
         }
