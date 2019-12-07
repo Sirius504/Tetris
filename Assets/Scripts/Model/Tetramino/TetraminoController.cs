@@ -119,8 +119,8 @@ namespace Tetris.Model
         private void ReleaseCurrentTetramino()
         {
             HashSet<int> linesAffected = GetLinesOccupiedByTetramino(currentTetramino);
-            OnTetraminoReleased?.Invoke(linesAffected);
             currentTetramino = null;
+            OnTetraminoReleased?.Invoke(linesAffected);
         }
 
         private Vector2Int GetTetraminoStartPosition(Tetramino newTetramino)

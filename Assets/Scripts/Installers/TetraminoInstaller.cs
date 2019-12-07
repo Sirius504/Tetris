@@ -7,8 +7,9 @@ namespace Tetris.Installers
     public class TetraminoInstaller : MonoInstaller
     {
         public override void InstallBindings()
-        {
-            Container.Bind<TetraminoController>().AsSingle();
+        {            
+            Container.Bind<TetraminoController>()
+                .AsSingle();
             Container.BindSignal<TetraminoShiftSignal>()
                 .ToMethod<TetraminoController>((x, s) => x.Shift(s.Shift))
                 .FromResolve();
@@ -16,8 +17,16 @@ namespace Tetris.Installers
                 .ToMethod<TetraminoController>((x, s) => x.Rotate(s.Rotation))
                 .FromResolve();
 
-            Container.Bind<TetraminoFactory>().AsSingle();
-            Container.Bind<FilledLinesCleaner>().FromNew().AsSingle().NonLazy();
+            Container.Bind<TetraminoFactory>()
+                .AsSingle();
+            Container.Bind<FilledLinesCleaner>()
+                .AsSingle()
+                .NonLazy();
+            Container.Bind<Spawner>()
+                .AsSingle()
+                .NonLazy();
+
+
         }
     }
 }

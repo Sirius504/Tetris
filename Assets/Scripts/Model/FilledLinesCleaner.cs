@@ -8,18 +8,15 @@ namespace Tetris.Model
     public class FilledLinesCleaner 
     {
         private readonly GameGrid grid;
-        private readonly TetraminoController tetraminoController;
 
         public event Action OnLineCleared;
 
-        public FilledLinesCleaner(GameGrid grid, TetraminoController tetraminoController)
+        public FilledLinesCleaner(GameGrid grid)
         {
             this.grid = grid;
-            this.tetraminoController = tetraminoController;
-            tetraminoController.OnTetraminoReleased += ClearLinesIfFilled;
         }
 
-        private void ClearLinesIfFilled(HashSet<int> lines)
+        public void ClearLinesIfFilled(HashSet<int> lines)
         {
             var filledLines = GetFilledLines(lines);
             if (filledLines.Count > 0)
