@@ -17,20 +17,9 @@ namespace Tetris.Installers
 
         public override void InstallBindings()
         {
-            var grid = new TetrisGrid(gridSize);
-            Container.Bind<GameGrid>().FromInstance(grid).AsSingle();
-            Container.BindInstance(grid).AsSingle();
-            Container.BindSignal<TetraminoShiftSignal>()
-                .ToMethod<TetrisGrid>((x, s) => x.ShiftTetramino(s.Shift))
-                .FromResolve();
-            Container.BindSignal<TetraminoRotationSignal>()
-                .ToMethod<TetrisGrid>((x, s) => x.RotateTetramino(s.Rotation))
-                .FromResolve();
-
-            Container.Bind<TetraminoFactory>().AsSingle();
-
+            Container.Bind<GameGrid>().AsSingle().WithArguments(gridSize);
             Container.Bind<GridRenderer>().AsSingle();
-            Container.BindMemoryPool<View.Cell, View.Cell.Pool>()
+            Container.BindMemoryPool<Cell, Cell.Pool>()
                 .WithInitialSize(gridSize.x * gridSize.y / 2)
                 .FromComponentInNewPrefab(cellPrefab)
                 .UnderTransform(cellsParent);

@@ -29,8 +29,8 @@ namespace Tetris.View
             gridCornerOffset = gridComponent.cellSize / 2f;
             cells = new Cell[gridModel.Size.x, gridModel.Size.y];
 
-            gridModel.OnCellCreated += SpawnCell;
-            gridModel.OnCellDeleted += DespawnCell;
+            gridModel.OnMinoAdded += SpawnCell;
+            gridModel.OnMinoDeleted += DespawnCell;
         }
 
         private void SpawnCell(Vector2Int position, Mino minoData)

@@ -29,12 +29,12 @@ namespace Tetris.View
 
         public void OnMouseInput(GridInputMouseSignal signal)
         {
-            var colorValues = (CellColorsEnum[])Enum.GetValues(typeof(CellColorsEnum));
-            CellColorsEnum color = colorValues[UnityEngine.Random.Range(0, colorValues.Length)];
-            if (tetrisGrid.Cells[signal.Position.x, signal.Position.y] != null)
-                tetrisGrid.DeleteCell(signal.Position);
+            var colorValues = (MinoColorsEnum[])Enum.GetValues(typeof(MinoColorsEnum));
+            MinoColorsEnum color = colorValues[UnityEngine.Random.Range(0, colorValues.Length)];
+            if (tetrisGrid.GetCell(signal.Position) != null)
+                tetrisGrid.DeleteMino(signal.Position);
             else
-                tetrisGrid.CreateCell(signal.Position, color);
+                tetrisGrid.CreateMino(signal.Position, color);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Tetris.View
             this.colorMaterials = colorMaterials;
         }
 
-        public void SetColor(CellColorsEnum color)
+        public void SetColor(MinoColorsEnum color)
         {
             spriteRenderer.material = colorMaterials.GetMaterial(color);
         }

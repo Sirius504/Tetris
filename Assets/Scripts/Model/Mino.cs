@@ -4,9 +4,9 @@ namespace Tetris.Model
 {
     public class Mino
     {
-        public CellColorsEnum Color { get; }
+        public MinoColorsEnum Color { get; }
 
-        public Mino(CellColorsEnum color)
+        public Mino(MinoColorsEnum color)
         {
             Color = color;
         }

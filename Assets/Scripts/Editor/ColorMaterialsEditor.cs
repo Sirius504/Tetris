@@ -13,7 +13,7 @@ namespace Tetris.CustomInspectors
         {
             base.OnInspectorGUI();
             var colorMaterials = (ColorMaterials)target;
-            List<CellColorsEnum> colorsWithMissingMaterials = null;
+            List<MinoColorsEnum> colorsWithMissingMaterials = null;
             try
             {
                 colorsWithMissingMaterials = colorMaterials.GetColorsWithMissingMaterials();

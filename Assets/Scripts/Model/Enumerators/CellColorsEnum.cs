@@ -1,6 +1,6 @@
 ﻿namespace Tetris.Model.Enumerators
 {
-    public enum CellColorsEnum
+    public enum MinoColorsEnum
     {
         Red,
         Blue,

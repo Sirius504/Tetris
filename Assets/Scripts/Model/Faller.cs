@@ -6,14 +6,14 @@ namespace Tetris.Model
 {
     public class Faller : MonoBehaviour
     {
-        private TetrisGrid tetrisGrid;
+        private TetraminoController linesCleaner;
         public float fallRate = 1f;
         private float tickTimer;
 
         [Inject]
-        public void Construct(TetrisGrid tetrisGrid)
+        public void Construct(TetraminoController tetrisGrid)
         {
-            this.tetrisGrid = tetrisGrid;
+            this.linesCleaner = tetrisGrid;
         }
 
         private void Update()
@@ -22,7 +22,7 @@ namespace Tetris.Model
             if (tickTimer >= fallRate)
             {
                 tickTimer -= fallRate;
-                tetrisGrid.ApplyGravity();
+                linesCleaner.ApplyGravity();
             }
         }
     } 

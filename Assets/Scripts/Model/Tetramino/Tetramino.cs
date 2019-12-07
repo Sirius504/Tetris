@@ -12,7 +12,7 @@ namespace Tetris.Model
         public Vector2Int Size { get; }
         public Vector2 Pivot { get; }
         public RotationStateEnum CurrentRotationState { get; }
-        public CellColorsEnum Color { get; }
+        public MinoColorsEnum Color { get; }
 
         private readonly int[,] clockwiseRotationMatrix =
         {
@@ -25,7 +25,7 @@ namespace Tetris.Model
             {1,  0}
         };
 
-        public Tetramino(TetraminoTypeEnum type, int[,] matrix, Vector2 pivot, RotationStateEnum currentRotation, CellColorsEnum color)
+        public Tetramino(TetraminoTypeEnum type, int[,] matrix, Vector2 pivot, RotationStateEnum currentRotation, MinoColorsEnum color)
         {
             Type = type;
             Matrix = matrix;
@@ -75,7 +75,7 @@ namespace Tetris.Model
             return newMatrix;
         }
 
-        private List<Vector2> GetMinosCoordinates()
+        public List<Vector2> GetMinosCoordinates()
         {
             List<Vector2> result = new List<Vector2>();
             for (int j = 0; j < Matrix.GetLength(1); j++)
